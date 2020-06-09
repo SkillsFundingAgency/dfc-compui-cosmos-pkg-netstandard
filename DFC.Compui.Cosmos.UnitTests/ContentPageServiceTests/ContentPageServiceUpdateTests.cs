@@ -10,7 +10,7 @@ using Xunit;
 namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
 {
     [Trait("Category", "Page Service Unit Tests")]
-    public class ContentPageUpdateTests
+    public class ContentPageServiceUpdateTests
     {
         [Fact]
         public void ContentPageUpdateReturnsSuccessWWhenContentPageReplaced()

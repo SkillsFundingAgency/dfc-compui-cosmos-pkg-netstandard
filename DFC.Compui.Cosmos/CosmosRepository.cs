@@ -104,8 +104,13 @@ namespace DFC.Compui.Cosmos.Contracts
             return default;
         }
 
-        public async Task<TModel?> GetAsync(string partitionKeyValue, Expression<Func<TModel, bool>> where)
+        public async Task<TModel?> GetAsync(string? partitionKeyValue, Expression<Func<TModel, bool>> where)
         {
+            if (string.IsNullOrWhiteSpace(partitionKeyValue))
+            {
+                throw new ArgumentNullException(nameof(partitionKeyValue));
+            }
+
             var partitionKey = new PartitionKey(partitionKeyValue.ToLowerInvariant());
 
             var query = documentClient.CreateDocumentQuery<TModel>(DocumentCollectionUri, new FeedOptions { MaxItemCount = 1, PartitionKey = partitionKey })
@@ -144,8 +149,13 @@ namespace DFC.Compui.Cosmos.Contracts
             return models.Any() ? models : default;
         }
 
-        public async Task<IEnumerable<TModel>?> GetAllAsync(string partitionKeyValue)
+        public async Task<IEnumerable<TModel>?> GetAllAsync(string? partitionKeyValue)
         {
+            if (string.IsNullOrWhiteSpace(partitionKeyValue))
+            {
+                throw new ArgumentNullException(nameof(partitionKeyValue));
+            }
+
             var partitionKey = new PartitionKey(partitionKeyValue.ToLowerInvariant());
 
             var query = documentClient.CreateDocumentQuery<TModel>(DocumentCollectionUri, new FeedOptions { PartitionKey = partitionKey })
@@ -165,6 +175,8 @@ namespace DFC.Compui.Cosmos.Contracts
 
         public async Task<HttpStatusCode> UpsertAsync(TModel model)
         {
+            _ = model ?? throw new ArgumentNullException(nameof(model));
+
             var accessCondition = new AccessCondition { Condition = model.Etag, Type = AccessConditionType.IfMatch };
             var partitionKey = new PartitionKey(model.PartitionKey);
 

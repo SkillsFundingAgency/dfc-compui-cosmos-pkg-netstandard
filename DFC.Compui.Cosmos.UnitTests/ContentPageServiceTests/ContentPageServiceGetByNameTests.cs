@@ -9,13 +9,13 @@ using Xunit;
 namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
 {
     [Trait("Category", "Page Service Unit Tests")]
-    public class ContentPageGetByNameTests
+    public class ContentPageServiceGetByNameTests
     {
         private const string CanonicalName = "name1";
         private readonly ICosmosRepository<TestContentPageModel> repository;
         private readonly IContentPageService<TestContentPageModel> contentPageService;
 
-        public ContentPageGetByNameTests()
+        public ContentPageServiceGetByNameTests()
         {
             repository = A.Fake<ICosmosRepository<TestContentPageModel>>();
             contentPageService = new ContentPageService<TestContentPageModel>(repository);

@@ -8,7 +8,7 @@ using Xunit;
 namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
 {
     [Trait("Category", "Page Service Unit Tests")]
-    public class ContentPageGetAllTests
+    public class ContentPageServiceGetAllTests
     {
         [Fact]
         public async Task ContentPageGetAllListReturnsSuccess()

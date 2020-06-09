@@ -6,7 +6,7 @@ using Xunit;
 namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
 {
     [Trait("Category", "Page Service Unit Tests")]
-    public class ContentPagePingTests
+    public class ContentPageServicePingTests
     {
         [Fact]
         public void ContentPagePingReturnsSuccess()

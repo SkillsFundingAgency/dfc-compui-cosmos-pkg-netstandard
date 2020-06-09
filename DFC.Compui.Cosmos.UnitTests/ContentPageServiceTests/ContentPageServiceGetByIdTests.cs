@@ -7,7 +7,7 @@ using Xunit;
 namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
 {
     [Trait("Category", "Page Service Unit Tests")]
-    public class ContentPageGetByIdTests
+    public class ContentPageServiceGetByIdTests
     {
         [Fact]
         public void ContentPageGetByIdReturnsSuccess()
