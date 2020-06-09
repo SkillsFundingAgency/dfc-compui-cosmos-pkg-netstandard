@@ -14,7 +14,7 @@ namespace DFC.Compui.Cosmos.Contracts
         [JsonProperty(Order = -20)]
         public abstract string? PartitionKey { get; set; }
 
-        [JsonProperty(PropertyName = "_etag")]
+        [JsonProperty(PropertyName = "_etag", Order = 0)]
         public string? Etag { get; set; }
     }
 }
