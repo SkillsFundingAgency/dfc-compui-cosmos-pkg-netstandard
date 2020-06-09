@@ -1,11 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DFC.Compui.Cosmos", "DFC.Compui.Cosmos\DFC.Compui.Cosmos.csproj", "{F7AF9CBB-CCA5-45B6-9753-D49DBC3D4BC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFC.Compui.Cosmos", "DFC.Compui.Cosmos\DFC.Compui.Cosmos.csproj", "{F7AF9CBB-CCA5-45B6-9753-D49DBC3D4BC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DFC.Compui.Cosmos.UnitTests", "DFC.Compui.Cosmos.UnitTests\DFC.Compui.Cosmos.UnitTests.csproj", "{067322EC-C204-4167-89D4-1D3C8EA442AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFC.Compui.Cosmos.UnitTests", "DFC.Compui.Cosmos.UnitTests\DFC.Compui.Cosmos.UnitTests.csproj", "{067322EC-C204-4167-89D4-1D3C8EA442AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{61E1148C-F0E8-4FF1-A857-402B59C54B32}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		CODEOWNERS = CODEOWNERS
+		DFC.Digital.CodeAnalysis.ruleset = DFC.Digital.CodeAnalysis.ruleset
+		LICENSE = LICENSE
+		README.md = README.md
+		stylecop.json = stylecop.json
+		UnitTests.CodeAnalysis.ruleset = UnitTests.CodeAnalysis.ruleset
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +27,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{F7AF9CBB-CCA5-45B6-9753-D49DBC3D4BC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -44,5 +53,11 @@ Global
 		{067322EC-C204-4167-89D4-1D3C8EA442AC}.Release|x64.Build.0 = Release|Any CPU
 		{067322EC-C204-4167-89D4-1D3C8EA442AC}.Release|x86.ActiveCfg = Release|Any CPU
 		{067322EC-C204-4167-89D4-1D3C8EA442AC}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {592C5B88-3AD1-4C26-968C-24C0DCB15A80}
 	EndGlobalSection
 EndGlobal
