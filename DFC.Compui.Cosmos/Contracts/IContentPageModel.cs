@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DFC.Compui.Cosmos.Contracts
 {
@@ -7,5 +8,7 @@ namespace DFC.Compui.Cosmos.Contracts
         string? CanonicalName { get; set; }
 
         IList<string>? AlternativeNames { get; set; }
+
+        Guid? Version { get; set; }
     }
 }
