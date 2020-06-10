@@ -23,7 +23,7 @@ namespace DFC.Compui.Cosmos.Attributes
                 throw new ArgumentNullException(nameof(validationContext));
             }
 
-            var validChars = "abcdefghijklmnopqrstuvwxyz01234567890_-";
+            var validChars = "abcdefghijklmnopqrstuvwxyz01234567890_-/";
             var result = value switch
             {
                 IEnumerable<string> list => list.All(x => x.Length > 0 && x.All(y => validChars.Contains(y, StringComparison.OrdinalIgnoreCase))),
