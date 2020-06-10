@@ -1,14 +1,16 @@
 ﻿using DFC.Compui.Cosmos.Contracts;
-using DFC.Compui.Cosmos.Models;
 using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace DFC.Compui.Cosmos.UnitTests.Models
 {
-    public class TestContentPageModel : ContentPageModel, IContentPageModel
+    public class TestDocumentModel : DocumentModel
     {
-        [Required]
         [JsonProperty(Order = -10)]
         public override string? PartitionKey { get; set; } = "test-value";
+
+        public string? Content { get; set; }
+
+        public DateTime LastReviewed { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace DFC.Compui.Cosmos.Attributes
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class UrlPathAttribute : ValidationAttribute
     {
-        private const string FieldNotUrlPath = "The field {0} does not contains valid characters for a url path. Valid characters are {1}";
+        private const string FieldNotUrlPath = "The field {0} does not contains valid characters for a url path.";
 
         protected override ValidationResult IsValid(object? value, ValidationContext? validationContext)
         {
@@ -31,7 +31,7 @@ namespace DFC.Compui.Cosmos.Attributes
             };
 
             return result ? ValidationResult.Success
-                : new ValidationResult(string.Format(CultureInfo.InvariantCulture, FieldNotUrlPath, validationContext.DisplayName, validChars), new[] { validationContext.MemberName });
+                : new ValidationResult(string.Format(CultureInfo.InvariantCulture, FieldNotUrlPath, validationContext.DisplayName), new[] { validationContext.MemberName });
         }
     }
 }

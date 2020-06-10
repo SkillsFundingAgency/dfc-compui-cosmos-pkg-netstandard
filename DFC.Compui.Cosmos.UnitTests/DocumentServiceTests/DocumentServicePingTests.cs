@@ -3,24 +3,24 @@ using DFC.Compui.Cosmos.UnitTests.Models;
 using FakeItEasy;
 using Xunit;
 
-namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
+namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
 {
-    [Trait("Category", "Page Service Unit Tests")]
-    public class ContentPageServicePingTests
+    [Trait("Category", "Document Service Unit Tests")]
+    public class DocumentServicePingTests
     {
         [Fact]
-        public void ContentPagePingReturnsSuccess()
+        public void DocumentPingReturnsSuccess()
         {
             // arrange
-            var repository = A.Fake<ICosmosRepository<TestContentPageModel>>();
+            var repository = A.Fake<ICosmosRepository<TestDocumentModel>>();
             var expectedResult = true;
 
             A.CallTo(() => repository.PingAsync()).Returns(expectedResult);
 
-            var contentPageService = new ContentPageService<TestContentPageModel>(repository);
+            var documentService = new DocumentService<TestDocumentModel>(repository);
 
             // act
-            var result = contentPageService.PingAsync().Result;
+            var result = documentService.PingAsync().Result;
 
             // assert
             A.CallTo(() => repository.PingAsync()).MustHaveHappenedOnceExactly();
@@ -28,18 +28,18 @@ namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
         }
 
         [Fact]
-        public void ContentPagePingReturnsFalseWhenMissingRepository()
+        public void DocumentPingReturnsFalseWhenMissingRepository()
         {
             // arrange
-            var repository = A.Dummy<ICosmosRepository<TestContentPageModel>>();
+            var repository = A.Dummy<ICosmosRepository<TestDocumentModel>>();
             var expectedResult = false;
 
             A.CallTo(() => repository.PingAsync()).Returns(expectedResult);
 
-            var contentPageService = new ContentPageService<TestContentPageModel>(repository);
+            var documentService = new DocumentService<TestDocumentModel>(repository);
 
             // act
-            var result = contentPageService.PingAsync().Result;
+            var result = documentService.PingAsync().Result;
 
             // assert
             A.CallTo(() => repository.PingAsync()).MustHaveHappenedOnceExactly();

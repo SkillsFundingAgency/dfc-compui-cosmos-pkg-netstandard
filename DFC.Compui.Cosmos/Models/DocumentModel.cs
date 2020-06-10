@@ -11,6 +11,7 @@ namespace DFC.Compui.Cosmos.Contracts
         [JsonProperty(PropertyName = "id", Order = -30)]
         public Guid Id { get; set; }
 
+        [Required]
         [JsonProperty(Order = -20)]
         public abstract string? PartitionKey { get; set; }
 

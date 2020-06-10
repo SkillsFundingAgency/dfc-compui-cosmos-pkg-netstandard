@@ -5,25 +5,25 @@ using System;
 using System.Net;
 using Xunit;
 
-namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
+namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
 {
-    [Trait("Category", "Page Service Unit Tests")]
-    public class ContentPageServiceDeleteTests
+    [Trait("Category", "Document Service Unit Tests")]
+    public class DocumentServiceDeleteTests
     {
         [Fact]
-        public void ContentPageDeleteReturnsSuccessWWhenContentPageDeleted()
+        public void DocumentDeleteReturnsSuccessWWhenDocumentDeleted()
         {
             // arrange
             Guid documentId = Guid.NewGuid();
-            var repository = A.Fake<ICosmosRepository<TestContentPageModel>>();
+            var repository = A.Fake<ICosmosRepository<TestDocumentModel>>();
             var expectedResult = true;
 
             A.CallTo(() => repository.DeleteAsync(documentId)).Returns(HttpStatusCode.NoContent);
 
-            var contentPageService = new ContentPageService<TestContentPageModel>(repository);
+            var documentService = new DocumentService<TestDocumentModel>(repository);
 
             // act
-            var result = contentPageService.DeleteAsync(documentId).Result;
+            var result = documentService.DeleteAsync(documentId).Result;
 
             // assert
             A.CallTo(() => repository.DeleteAsync(documentId)).MustHaveHappenedOnceExactly();
@@ -31,19 +31,19 @@ namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
         }
 
         [Fact]
-        public void ContentPageDeleteReturnsNullWWhenContentPageNotDeleted()
+        public void DocumentDeleteReturnsNullWWhenDocumentNotDeleted()
         {
             // arrange
             Guid documentId = Guid.NewGuid();
-            var repository = A.Fake<ICosmosRepository<TestContentPageModel>>();
+            var repository = A.Fake<ICosmosRepository<TestDocumentModel>>();
             var expectedResult = false;
 
             A.CallTo(() => repository.DeleteAsync(documentId)).Returns(HttpStatusCode.BadRequest);
 
-            var contentPageService = new ContentPageService<TestContentPageModel>(repository);
+            var documentService = new DocumentService<TestDocumentModel>(repository);
 
             // act
-            var result = contentPageService.DeleteAsync(documentId).Result;
+            var result = documentService.DeleteAsync(documentId).Result;
 
             // assert
             A.CallTo(() => repository.DeleteAsync(documentId)).MustHaveHappenedOnceExactly();
@@ -51,19 +51,19 @@ namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
         }
 
         [Fact]
-        public void ContentPageDeleteReturnsFalseWhenMissingRepository()
+        public void DocumentDeleteReturnsFalseWhenMissingRepository()
         {
             // arrange
             Guid documentId = Guid.NewGuid();
-            var repository = A.Dummy<ICosmosRepository<TestContentPageModel>>();
+            var repository = A.Dummy<ICosmosRepository<TestDocumentModel>>();
             var expectedResult = false;
 
             A.CallTo(() => repository.DeleteAsync(documentId)).Returns(HttpStatusCode.FailedDependency);
 
-            var contentPageService = new ContentPageService<TestContentPageModel>(repository);
+            var documentService = new DocumentService<TestDocumentModel>(repository);
 
             // act
-            var result = contentPageService.DeleteAsync(documentId).Result;
+            var result = documentService.DeleteAsync(documentId).Result;
 
             // assert
             A.CallTo(() => repository.DeleteAsync(documentId)).MustHaveHappenedOnceExactly();

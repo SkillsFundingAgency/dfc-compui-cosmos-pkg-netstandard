@@ -8,7 +8,7 @@ using Xunit;
 
 namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
 {
-    [Trait("Category", "Page Service Unit Tests")]
+    [Trait("Category", "Content Page Service Unit Tests")]
     public class ContentPageServiceGetByNameTests
     {
         private const string CanonicalName = "name1";

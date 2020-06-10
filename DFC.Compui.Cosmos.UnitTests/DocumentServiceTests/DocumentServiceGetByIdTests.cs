@@ -4,25 +4,25 @@ using FakeItEasy;
 using System;
 using Xunit;
 
-namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
+namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
 {
-    [Trait("Category", "Page Service Unit Tests")]
-    public class ContentPageServiceGetByIdTests
+    [Trait("Category", "Document Service Unit Tests")]
+    public class DocumentServiceGetByIdTests
     {
         [Fact]
-        public void ContentPageGetByIdReturnsSuccess()
+        public void DocumentGetByIdReturnsSuccess()
         {
             // arrange
             Guid documentId = Guid.NewGuid();
-            var repository = A.Fake<ICosmosRepository<TestContentPageModel>>();
-            var expectedResult = A.Fake<TestContentPageModel>();
+            var repository = A.Fake<ICosmosRepository<TestDocumentModel>>();
+            var expectedResult = A.Fake<TestDocumentModel>();
 
             A.CallTo(() => repository.GetByIdAsync(A<Guid>.Ignored)).Returns(expectedResult);
 
-            var contentPageService = new ContentPageService<TestContentPageModel>(repository);
+            var documentService = new DocumentService<TestDocumentModel>(repository);
 
             // act
-            var result = contentPageService.GetByIdAsync(documentId).Result;
+            var result = documentService.GetByIdAsync(documentId).Result;
 
             // assert
             A.CallTo(() => repository.GetByIdAsync(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
@@ -30,19 +30,19 @@ namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
         }
 
         [Fact]
-        public void ContentPageGetByIdReturnsNullWhenMissingRepository()
+        public void DocumentGetByIdReturnsNullWhenMissingRepository()
         {
             // arrange
             Guid documentId = Guid.NewGuid();
-            var repository = A.Fake<ICosmosRepository<TestContentPageModel>>();
-            TestContentPageModel? expectedResult = null;
+            var repository = A.Fake<ICosmosRepository<TestDocumentModel>>();
+            TestDocumentModel? expectedResult = null;
 
             A.CallTo(() => repository.GetByIdAsync(A<Guid>.Ignored)).Returns(expectedResult);
 
-            var contentPageService = new ContentPageService<TestContentPageModel>(repository);
+            var documentService = new DocumentService<TestDocumentModel>(repository);
 
             // act
-            var result = contentPageService.GetByIdAsync(documentId).Result;
+            var result = documentService.GetByIdAsync(documentId).Result;
 
             // assert
             A.CallTo(() => repository.GetByIdAsync(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
