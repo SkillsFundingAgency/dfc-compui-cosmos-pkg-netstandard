@@ -6,6 +6,6 @@ namespace DFC.Compui.Cosmos.Contracts
     {
         string? CanonicalName { get; set; }
 
-        public IList<string>? AlternativeNames { get; set; }
+        IList<string>? AlternativeNames { get; set; }
     }
 }
