@@ -130,6 +130,8 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
         [InlineData("xyz123")]
         [InlineData("abc_def")]
         [InlineData("abc-def")]
+        [InlineData("/abc-def")]
+        [InlineData("/abc/def")]
         public void CanCheckIfUrlIsValid(string url)
         {
             // Arrange

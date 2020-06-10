@@ -10,7 +10,7 @@ This is a self-contained Visual Studio 2019 solution containing a number of proj
 
 ## Using this Nuget
 
-To use this Nuget in a Composit UI child app, add DFC.Compui.Cosmos from Nuget. Then apply the following to your Composite Child app's startup class, ConfigureServices method:
+To use this Nuget in a Composite UI child app, add DFC.Compui.Cosmos from Nuget. Then apply the following to your Composite Child app's startup class, ConfigureServices method:
 
 ```c#
 var cosmosDbConnectionContentPages = configuration.GetSection("Configuration:CosmosDbConnections:ContentPages").Get<CosmosDbConnection>();
