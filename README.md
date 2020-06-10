@@ -36,13 +36,54 @@ The appsettings for the Cosmos connection should be loaded into a CosmosDbConnec
 }
 ```
 
-To access the Cosmos service, inject the following in to class constructors:
+There are two use cases for this Nuget:
+
+1. Simple Document service
+2. Content Page service
+
+Simple Document Service use
+
+To register the cosmos repository Nuget, add either of the following to the child app Startup class ConfigureServices method:
+
+```c#
+services.AddDocumentServices<DocumentModel>(cosmosDbConnectionContentPages, env.IsDevelopment());
+```
+
+To use of the Cosmos repository Nuget, inject the following in class constructors:
+
+```c#
+IDocumentService<DocumentModel> contentPageService
+```
+
+Sample use of the Cosmos repository in code:
+
+```c#
+...
+var documentModels = await documentService.GetAllAsync().ConfigureAwait(false);
+...
+var existingDocument = await documentService.GetByIdAsync(id).ConfigureAwait(false);
+...
+var response = await documentService.UpsertAsync(documentModel).ConfigureAwait(false);
+...
+var isDeleted = await documentService.documentService(id).ConfigureAwait(false);
+...
+```
+
+Content Page Service use
+
+To register the cosmos repository Nuget, add either of the following to the child app Startup class ConfigureServices method:
+
+```c#
+services.AddContentPageServices<ContentPageModel>(cosmosDbConnectionContentPages, env.IsDevelopment());
+```
+
+To use of the Cosmos repository Nuget, inject the following in class constructors:
 
 ```c#
 IContentPageService<ContentPageModel> contentPageService
 ```
 
-The Cosmos service makes available the following methods:
+Sample use of the Cosmos repository in code:
 
 ```c#
 ...
@@ -56,9 +97,9 @@ var contentPageModel = await contentPageService.GetByAlternativeNameAsync(altern
 ...var response = await contentPageService.UpsertAsync(contentPageModel).ConfigureAwait(false);
 ...
 var isDeleted = await contentPageService.DeleteAsync(id).ConfigureAwait(false);
-...
+...```
 
-```
+
 
 In the above sample code, the ContentPageModel is a model inherited from the DFC.Compui.Cosmos.Models.ContentPageModel as follows:
 
