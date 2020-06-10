@@ -43,7 +43,7 @@ There are two use cases for this Nuget:
 
 Simple Document Service use
 
-To register the cosmos repository Nuget, add either of the following to the child app Startup class ConfigureServices method:
+To register the Cosmos repository Nuget, add either of the following to the child app Startup class ConfigureServices method:
 
 ```c#
 services.AddDocumentServices<DocumentModel>(cosmosDbConnectionContentPages, env.IsDevelopment());
@@ -71,7 +71,7 @@ var isDeleted = await documentService.documentService(id).ConfigureAwait(false);
 
 Content Page Service use
 
-To register the cosmos repository Nuget, add either of the following to the child app Startup class ConfigureServices method:
+To register the Cosmos repository Nuget, add either of the following to the child app Startup class ConfigureServices method:
 
 ```c#
 services.AddContentPageServices<ContentPageModel>(cosmosDbConnectionContentPages, env.IsDevelopment());
