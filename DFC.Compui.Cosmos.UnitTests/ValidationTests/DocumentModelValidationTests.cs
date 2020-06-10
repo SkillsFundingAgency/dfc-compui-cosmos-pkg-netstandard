@@ -15,6 +15,19 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
 
         private const string GuidEmpty = "00000000-0000-0000-0000-000000000000";
 
+        [Fact]
+        public void CheckForMissingMandatoryFields()
+        {
+            // Arrange
+            var model = new TestDocumentModel();
+
+            // Act
+            var vr = Validate(model);
+
+            // Assert
+            Assert.True(vr.Count == 1);
+            Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.Id)));
+        }
         [Theory]
         [InlineData(null)]
         [InlineData(GuidEmpty)]
