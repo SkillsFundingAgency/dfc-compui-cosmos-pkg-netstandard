@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>0.1.1</Version>
+    <Version>0.1.3</Version>
     <Company>Education and Skills Funding Agency</Company>
     <Authors>Education and Skills Funding Agency Team</Authors>
     <Copyright>Copyright (c) 2020 Education and Skills Funding Agency Team</Copyright>
