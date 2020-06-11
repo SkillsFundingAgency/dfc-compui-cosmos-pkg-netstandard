@@ -40,7 +40,6 @@ namespace DFC.Compui.Cosmos.Models
         public bool IncludeInSitemap { get; set; }
 
         [Required]
-        [UrlPath]
         public Uri? Url { get; set; }
 
         public MetaTagsModel MetaTags { get; set; } = new MetaTagsModel();

@@ -132,6 +132,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
         [InlineData("abc-def")]
         [InlineData("/abc-def")]
         [InlineData("/abc/def")]
+        [InlineData("https://abc/def")]
         public void CanCheckIfUrlIsValid(string url)
         {
             // Arrange
@@ -144,22 +145,6 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
             Assert.True(vr.Count == 0);
         }
 
-        [Theory]
-        [InlineData("abc def")]
-        public void CanCheckIfUrlIsInvalid(string url)
-        {
-            // Arrange
-            var model = CreateModel(Guid.NewGuid(), "canonicalname1", "content1", url, new List<string>());
-
-            // Act
-            var vr = Validate(model);
-
-            // Assert
-            Assert.True(vr.Count > 0);
-            Assert.NotNull(vr.First(f => f.MemberNames.Any(a => a == nameof(model.Url))));
-            Assert.Equal(string.Format(CultureInfo.InvariantCulture, FieldNotUrlPath, nameof(model.Url)), vr.First(f => f.MemberNames.Any(a => a == nameof(model.Url))).ErrorMessage);
-        }
-
         private ContentPageModel CreateModel(Guid id, string canonicalName, string content, string url, List<string> alternativeNames)
         {
             var model = new ContentPageModel
@@ -168,7 +153,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
                 CanonicalName = canonicalName,
                 BreadcrumbTitle = canonicalName,
                 Version = Guid.NewGuid(),
-                Url = new Uri(url, UriKind.Relative),
+                Url = new Uri(url, UriKind.RelativeOrAbsolute),
                 Content = content,
                 AlternativeNames = alternativeNames.ToArray(),
                 LastReviewed = DateTime.UtcNow,
