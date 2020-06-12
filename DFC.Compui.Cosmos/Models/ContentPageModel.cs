@@ -24,10 +24,6 @@ namespace DFC.Compui.Cosmos.Models
         [JsonProperty(Order = -10)]
         public IList<string>? AlternativeNames { get; set; }
 
-        [Obsolete("May be removed once Service Bus and Message Function app removed from solution")]
-        [JsonProperty(Order = -10)]
-        public long SequenceNumber { get; set; }
-
         [Required]
         [JsonProperty(Order = -10)]
         public Guid? Version { get; set; }
