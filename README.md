@@ -108,7 +108,6 @@ In the above sample code, the ContentPageModel is a model inherited from the DFC
 public class ContentPageModel : DFC.Compui.Cosmos.Models.ContentPageModel
 {
     public override string PartitionKey => "static-page";
-    public long SequenceNumber { get; set; }
     public string? Content { get; set; }
     public DateTime LastReviewed { get; set; }
 }
