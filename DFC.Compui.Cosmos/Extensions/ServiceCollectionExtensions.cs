@@ -1,4 +1,5 @@
 ﻿using DFC.Compui.Cosmos.Contracts;
+using DFC.Compui.Telemetry.Models;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,7 +12,7 @@ namespace DFC.Compui.Cosmos
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddDocumentServices<TModel>(this IServiceCollection services, CosmosDbConnection cosmosDbConnection, bool isDevelopment)
-         where TModel : class, IDocumentModel
+         where TModel : RequestTrace, IDocumentModel
         {
             _ = cosmosDbConnection ?? throw new ArgumentNullException(nameof(cosmosDbConnection));
 
@@ -27,7 +28,7 @@ namespace DFC.Compui.Cosmos
         }
 
         public static IServiceCollection AddContentPageServices<TModel>(this IServiceCollection services, CosmosDbConnection cosmosDbConnection, bool isDevelopment)
-         where TModel : class, IContentPageModel
+         where TModel : RequestTrace, IContentPageModel
         {
             _ = cosmosDbConnection ?? throw new ArgumentNullException(nameof(cosmosDbConnection));
 
