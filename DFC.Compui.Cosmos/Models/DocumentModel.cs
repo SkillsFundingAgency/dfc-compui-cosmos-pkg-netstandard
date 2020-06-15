@@ -1,10 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using DFC.Compui.Telemetry.Models;
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace DFC.Compui.Cosmos.Contracts
 {
-    public abstract class DocumentModel : IDocumentModel
+    public abstract class DocumentModel : RequestTrace, IDocumentModel
     {
         [Required]
         [Guid]
