@@ -1,4 +1,6 @@
-﻿using Microsoft.Azure.Documents;
+﻿using DFC.Compui.Telemetry.Models;
+using DFC.Compui.Telemetry.TraceExtensions;
+using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Azure.Documents.Linq;
 using System;
@@ -14,7 +16,7 @@ namespace DFC.Compui.Cosmos.Contracts
 {
     [ExcludeFromCodeCoverage]
     public class CosmosRepository<TModel> : ICosmosRepository<TModel>
-        where TModel : class, IDocumentModel
+        where TModel : RequestTrace, IDocumentModel
     {
         private readonly CosmosDbConnection cosmosDbConnection;
         private readonly IDocumentClient documentClient;
@@ -176,6 +178,8 @@ namespace DFC.Compui.Cosmos.Contracts
         public async Task<HttpStatusCode> UpsertAsync(TModel model)
         {
             _ = model ?? throw new ArgumentNullException(nameof(model));
+
+            model.AddTraceInformation();
 
             var accessCondition = new AccessCondition { Condition = model.Etag, Type = AccessConditionType.IfMatch };
             var partitionKey = new PartitionKey(model.PartitionKey);
