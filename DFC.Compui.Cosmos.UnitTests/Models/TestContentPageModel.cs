@@ -10,5 +10,9 @@ namespace DFC.Compui.Cosmos.UnitTests.Models
         [Required]
         [JsonProperty(Order = -10)]
         public override string? PartitionKey { get; set; } = "test-value";
+
+        [Required]
+        [JsonProperty(Order = -10)]
+        public override string? PageLocation { get; set; } = "test-location";
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DFC.Compui.Cosmos.Models;
+using DFC.Compui.Cosmos.UnitTests.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +9,7 @@ using Xunit;
 
 namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
 {
-    [Trait("Category", "ContentPageModel Validation Unit Tests")]
+    [Trait("Category", "TestContentPageModel Validation Unit Tests")]
     public class ContentPageModelValidationTests
     {
         private const string FieldInvalidGuid = "The field {0} has to be a valid GUID and cannot be an empty GUID.";
@@ -20,16 +21,15 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
         public void CheckForMissingMandatoryFields()
         {
             // Arrange
-            var model = new ContentPageModel();
+            var model = new TestContentPageModel();
 
             // Act
             var vr = Validate(model);
 
             // Assert
-            Assert.True(vr.Count == 7);
+            Assert.True(vr.Count == 6);
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.Id)));
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.CanonicalName)));
-            Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.PageLocation)));
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.Version)));
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.BreadcrumbTitle)));
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.Url)));
@@ -180,9 +180,9 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
             Assert.True(vr.Count == 0);
         }
 
-        private ContentPageModel CreateModel(Guid id, string canonicalName, string pageLocation, string content, string url, List<string> redirectLocations)
+        private TestContentPageModel CreateModel(Guid id, string canonicalName, string pageLocation, string content, string url, List<string> redirectLocations)
         {
-            var model = new ContentPageModel
+            var model = new TestContentPageModel
             {
                 Id = id,
                 CanonicalName = canonicalName,
@@ -198,7 +198,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
             return model;
         }
 
-        private List<ValidationResult> Validate(ContentPageModel model)
+        private List<ValidationResult> Validate(TestContentPageModel model)
         {
             var vr = new List<ValidationResult>();
             var vc = new ValidationContext(model);
