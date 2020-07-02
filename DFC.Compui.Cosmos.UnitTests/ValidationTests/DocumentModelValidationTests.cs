@@ -28,6 +28,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
             Assert.True(vr.Count == 1);
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.Id)));
         }
+
         [Theory]
         [InlineData(null)]
         [InlineData(GuidEmpty)]
