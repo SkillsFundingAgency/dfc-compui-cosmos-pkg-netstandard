@@ -7,7 +7,7 @@ namespace DFC.Compui.Cosmos.Contracts
     {
         string? CanonicalName { get; set; }
 
-        string? Pagelocation { get; set; }
+        string? PageLocation { get; set; }
 
         IList<string>? RedirectLocations { get; set; }
 

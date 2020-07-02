@@ -23,7 +23,7 @@ namespace DFC.Compui.Cosmos
                 throw new ArgumentNullException(nameof(canonicalName));
             }
 
-            return await Repository.GetAsync(d => d.Pagelocation == pagelocation.ToLowerInvariant() && d.CanonicalName == canonicalName.ToLowerInvariant()).ConfigureAwait(false);
+            return await Repository.GetAsync(d => d.PageLocation == pagelocation.ToLowerInvariant() && d.CanonicalName == canonicalName.ToLowerInvariant()).ConfigureAwait(false);
         }
 
         public async Task<TModel?> GetByRedirectLocationAsync(string? redirectLocation)

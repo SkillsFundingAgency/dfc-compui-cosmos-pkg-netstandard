@@ -29,7 +29,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
             Assert.True(vr.Count == 7);
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.Id)));
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.CanonicalName)));
-            Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.Pagelocation)));
+            Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.PageLocation)));
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.Version)));
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.BreadcrumbTitle)));
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.Url)));
@@ -119,8 +119,8 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
 
             // Assert
             Assert.True(vr.Count > 0);
-            Assert.NotNull(vr.First(f => f.MemberNames.Any(a => a == nameof(model.Pagelocation))));
-            Assert.Equal(string.Format(CultureInfo.InvariantCulture, FieldNotLowercase, nameof(model.Pagelocation)), vr.First(f => f.MemberNames.Any(a => a == nameof(model.Pagelocation))).ErrorMessage);
+            Assert.NotNull(vr.First(f => f.MemberNames.Any(a => a == nameof(model.PageLocation))));
+            Assert.Equal(string.Format(CultureInfo.InvariantCulture, FieldNotLowercase, nameof(model.PageLocation)), vr.First(f => f.MemberNames.Any(a => a == nameof(model.PageLocation))).ErrorMessage);
         }
 
         [Theory]
@@ -186,7 +186,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
             {
                 Id = id,
                 CanonicalName = canonicalName,
-                Pagelocation = pageLocation,
+                PageLocation = pageLocation,
                 BreadcrumbTitle = canonicalName,
                 Version = Guid.NewGuid(),
                 Url = new Uri(url, UriKind.RelativeOrAbsolute),
