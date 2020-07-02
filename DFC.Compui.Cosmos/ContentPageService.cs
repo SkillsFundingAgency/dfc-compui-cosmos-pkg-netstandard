@@ -11,24 +11,29 @@ namespace DFC.Compui.Cosmos
         {
         }
 
-        public async Task<TModel?> GetByNameAsync(string? canonicalName)
+        public async Task<TModel?> GetByNameAsync(string? pagelocation, string? canonicalName)
         {
+            if (string.IsNullOrWhiteSpace(pagelocation))
+            {
+                throw new ArgumentNullException(nameof(pagelocation));
+            }
+
             if (string.IsNullOrWhiteSpace(canonicalName))
             {
                 throw new ArgumentNullException(nameof(canonicalName));
             }
 
-            return await Repository.GetAsync(d => d.CanonicalName == canonicalName.ToLowerInvariant()).ConfigureAwait(false);
+            return await Repository.GetAsync(d => d.Pagelocation == pagelocation.ToLowerInvariant() && d.CanonicalName == canonicalName.ToLowerInvariant()).ConfigureAwait(false);
         }
 
-        public async Task<TModel?> GetByAlternativeNameAsync(string? alternativeName)
+        public async Task<TModel?> GetByRedirectLocationAsync(string? redirectLocation)
         {
-            if (string.IsNullOrWhiteSpace(alternativeName))
+            if (string.IsNullOrWhiteSpace(redirectLocation))
             {
-                throw new ArgumentNullException(nameof(alternativeName));
+                throw new ArgumentNullException(nameof(redirectLocation));
             }
 
-            return await Repository.GetAsync(d => d.AlternativeNames!.Contains(alternativeName.ToLowerInvariant())).ConfigureAwait(false);
+            return await Repository.GetAsync(d => d.RedirectLocations!.Contains(redirectLocation.ToLowerInvariant())).ConfigureAwait(false);
         }
     }
 }

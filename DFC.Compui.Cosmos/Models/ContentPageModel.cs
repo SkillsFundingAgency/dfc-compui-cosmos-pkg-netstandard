@@ -19,10 +19,16 @@ namespace DFC.Compui.Cosmos.Models
         [JsonProperty(Order = -10)]
         public string? CanonicalName { get; set; }
 
+        [Required]
+        [LowerCase]
+        [UrlPath]
+        [JsonProperty(Order = -10)]
+        public string? Pagelocation { get; set; }
+
         [UrlPath]
         [LowerCase]
         [JsonProperty(Order = -10)]
-        public IList<string>? AlternativeNames { get; set; }
+        public IList<string>? RedirectLocations { get; set; }
 
         [Required]
         [JsonProperty(Order = -10)]
