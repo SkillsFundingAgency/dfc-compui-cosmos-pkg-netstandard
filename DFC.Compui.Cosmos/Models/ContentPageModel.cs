@@ -1,5 +1,6 @@
 ﻿using DFC.Compui.Cosmos.Attributes;
 using DFC.Compui.Cosmos.Contracts;
+using DFC.Compui.Cosmos.Enums;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,12 @@ namespace DFC.Compui.Cosmos.Models
 
         [Display(Name = "Include In SiteMap")]
         public bool IncludeInSitemap { get; set; }
+
+        [Display(Name = "SiteMap Priority")]
+        public double SiteMapPriority { get; set; }
+
+        [Display(Name = "SiteMap Change Frequency")]
+        public SiteMapChangeFrequency SiteMapChangeFrequency { get; set; }
 
         [Required]
         public Uri? Url { get; set; }
