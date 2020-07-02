@@ -23,7 +23,7 @@ namespace DFC.Compui.Cosmos.Models
         [LowerCase]
         [UrlPath]
         [JsonProperty(Order = -10)]
-        public string? Pagelocation { get; set; }
+        public string? PageLocation { get; set; }
 
         [UrlPath]
         [LowerCase]
