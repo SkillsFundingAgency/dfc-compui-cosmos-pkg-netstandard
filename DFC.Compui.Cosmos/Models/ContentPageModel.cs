@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DFC.Compui.Cosmos.Models
 {
-    public class ContentPageModel : DocumentModel, IContentPageModel
+    public abstract class ContentPageModel : DocumentModel, IContentPageModel
     {
         [Required]
         [JsonProperty(Order = -10)]
@@ -23,7 +23,7 @@ namespace DFC.Compui.Cosmos.Models
         [LowerCase]
         [UrlPath]
         [JsonProperty(Order = -10)]
-        public string? PageLocation { get; set; }
+        public abstract string? PageLocation { get; set; }
 
         [UrlPath]
         [LowerCase]
