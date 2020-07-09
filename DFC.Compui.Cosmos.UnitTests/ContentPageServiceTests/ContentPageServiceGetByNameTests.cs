@@ -60,7 +60,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
             var exceptionResult = await Assert.ThrowsAsync<ArgumentNullException>(async () => await contentPageService.GetByNameAsync(pagelocation, CanonicalName).ConfigureAwait(false)).ConfigureAwait(false);
 
             // assert
-            Assert.Equal("Value cannot be null. (Parameter 'pagelocation')", exceptionResult.Message);
+            Assert.Equal("Value cannot be null. (Parameter 'pageLocation')", exceptionResult.Message);
         }
 
         [Fact]
