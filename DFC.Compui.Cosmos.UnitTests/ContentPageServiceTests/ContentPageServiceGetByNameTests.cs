@@ -11,6 +11,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
     [Trait("Category", "Content Page Service Unit Tests")]
     public class ContentPageServiceGetByNameTests
     {
+        private const string Pagelocation = "location1";
         private const string CanonicalName = "name1";
         private readonly ICosmosRepository<TestContentPageModel> repository;
         private readonly IContentPageService<TestContentPageModel> contentPageService;
@@ -29,7 +30,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
             A.CallTo(() => repository.GetAsync(A<Expression<Func<TestContentPageModel, bool>>>.Ignored)).Returns(expectedResult);
 
             // act
-            var result = await contentPageService.GetByNameAsync(CanonicalName).ConfigureAwait(false);
+            var result = await contentPageService.GetByNameAsync(Pagelocation, CanonicalName).ConfigureAwait(false);
 
             // assert
             A.CallTo(() => repository.GetAsync(A<Expression<Func<TestContentPageModel, bool>>>.Ignored)).MustHaveHappenedOnceExactly();
@@ -37,16 +38,29 @@ namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
         }
 
         [Fact]
-        public async Task ContentPageGetByNameReturnsArgumentNullExceptionWhenNullNameIsUsed()
+        public async Task ContentPageGetByNameReturnsArgumentNullExceptionWhenNullCanonicalNameIsUsed()
         {
             // arrange
             string? canonicalName = null;
 
             // act
-            var exceptionResult = await Assert.ThrowsAsync<ArgumentNullException>(async () => await contentPageService.GetByNameAsync(canonicalName).ConfigureAwait(false)).ConfigureAwait(false);
+            var exceptionResult = await Assert.ThrowsAsync<ArgumentNullException>(async () => await contentPageService.GetByNameAsync(Pagelocation, canonicalName).ConfigureAwait(false)).ConfigureAwait(false);
 
             // assert
             Assert.Equal("Value cannot be null. (Parameter 'canonicalName')", exceptionResult.Message);
+        }
+
+        [Fact]
+        public async Task ContentPageGetByNameReturnsArgumentNullExceptionWhenNullPagelocationIsUsed()
+        {
+            // arrange
+            string? pagelocation = null;
+
+            // act
+            var exceptionResult = await Assert.ThrowsAsync<ArgumentNullException>(async () => await contentPageService.GetByNameAsync(pagelocation, CanonicalName).ConfigureAwait(false)).ConfigureAwait(false);
+
+            // assert
+            Assert.Equal("Value cannot be null. (Parameter 'pageLocation')", exceptionResult.Message);
         }
 
         [Fact]
@@ -58,7 +72,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
             A.CallTo(() => repository.GetAsync(A<Expression<Func<TestContentPageModel, bool>>>.Ignored)).Returns(expectedResult);
 
             // act
-            var result = await contentPageService.GetByNameAsync(CanonicalName).ConfigureAwait(false);
+            var result = await contentPageService.GetByNameAsync(Pagelocation, CanonicalName).ConfigureAwait(false);
 
             // assert
             A.CallTo(() => repository.GetAsync(A<Expression<Func<TestContentPageModel, bool>>>.Ignored)).MustHaveHappenedOnceExactly();

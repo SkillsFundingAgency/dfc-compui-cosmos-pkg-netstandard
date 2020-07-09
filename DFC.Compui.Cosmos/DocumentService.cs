@@ -1,6 +1,7 @@
 ﻿using DFC.Compui.Cosmos.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -29,6 +30,11 @@ namespace DFC.Compui.Cosmos
         public async Task<TModel?> GetByIdAsync(Guid id)
         {
             return await Repository.GetByIdAsync(id).ConfigureAwait(false);
+        }
+
+        public async Task<TModel?> GetAsync(Expression<Func<TModel, bool>> where)
+        {
+            return await Repository.GetAsync(where).ConfigureAwait(false);
         }
 
         public async Task<HttpStatusCode> UpsertAsync(TModel? model)

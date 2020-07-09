@@ -1,4 +1,5 @@
 ﻿using DFC.Compui.Cosmos.Models;
+using DFC.Compui.Cosmos.UnitTests.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,12 +9,11 @@ using Xunit;
 
 namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
 {
-    [Trait("Category", "ContentPageModel Validation Unit Tests")]
+    [Trait("Category", "TestContentPageModel Validation Unit Tests")]
     public class ContentPageModelValidationTests
     {
         private const string FieldInvalidGuid = "The field {0} has to be a valid GUID and cannot be an empty GUID.";
         private const string FieldNotLowercase = "The field {0} is not in lowercase.";
-        private const string FieldNotUrlPath = "The field {0} does not contains valid characters for a url path.";
 
         private const string GuidEmpty = "00000000-0000-0000-0000-000000000000";
 
@@ -21,7 +21,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
         public void CheckForMissingMandatoryFields()
         {
             // Arrange
-            var model = new ContentPageModel();
+            var model = new TestContentPageModel();
 
             // Act
             var vr = Validate(model);
@@ -42,7 +42,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
         public void CanCheckIfDocumentIdIsInvalid(Guid documentId)
         {
             // Arrange
-            var model = CreateModel(documentId, "canonicalname1", "content1", "abc-def", new List<string>());
+            var model = CreateModel(documentId, "canonicalname1", "pagelocation", "content1", "abc-def", new List<string>());
 
             // Act
             var vr = Validate(model);
@@ -63,7 +63,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
         public void CanCheckIfCanonicalNameIsValid(string canonicalName)
         {
             // Arrange
-            var model = CreateModel(Guid.NewGuid(), canonicalName, "content", "abc-def", new List<string>());
+            var model = CreateModel(Guid.NewGuid(), canonicalName, "pagelocation", "content", "abc-def", new List<string>());
 
             // Act
             var vr = Validate(model);
@@ -77,7 +77,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
         public void CanCheckIfCanonicalNameIsInvalid(string canonicalName)
         {
             // Arrange
-            var model = CreateModel(Guid.NewGuid(), canonicalName, "content", "abc-def", new List<string>());
+            var model = CreateModel(Guid.NewGuid(), canonicalName, "pagelocation", "content", "abc-def", new List<string>());
 
             // Act
             var vr = Validate(model);
@@ -95,10 +95,10 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
         [InlineData("xyz123")]
         [InlineData("abc_def")]
         [InlineData("abc-def")]
-        public void CanCheckIfAlternativeNameIsValid(string alternativeName)
+        public void CanCheckIfPageLocationeIsValid(string pagelocation)
         {
             // Arrange
-            var model = CreateModel(Guid.NewGuid(), "canonicalname1", "content1", "abc-def", new List<string>() { alternativeName });
+            var model = CreateModel(Guid.NewGuid(), "canonicalname1", pagelocation, "content", "abc-def", new List<string>());
 
             // Act
             var vr = Validate(model);
@@ -109,18 +109,53 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
 
         [Theory]
         [InlineData("ABCDEF")]
-        public void CanCheckIfAlternativeNameIsInvalid(string alternativeName)
+        public void CanCheckIfPageLocationIsInvalid(string pagelocation)
         {
             // Arrange
-            var model = CreateModel(Guid.NewGuid(), "canonicalname1", "content1", "abc-def", new List<string>() { alternativeName });
+            var model = CreateModel(Guid.NewGuid(), "canonicalname1", pagelocation, "content", "abc-def", new List<string>());
 
             // Act
             var vr = Validate(model);
 
             // Assert
             Assert.True(vr.Count > 0);
-            Assert.NotNull(vr.First(f => f.MemberNames.Any(a => a == nameof(model.AlternativeNames))));
-            Assert.Equal(string.Format(CultureInfo.InvariantCulture, FieldNotLowercase, nameof(model.AlternativeNames)), vr.First(f => f.MemberNames.Any(a => a == nameof(model.AlternativeNames))).ErrorMessage);
+            Assert.NotNull(vr.First(f => f.MemberNames.Any(a => a == nameof(model.PageLocation))));
+            Assert.Equal(string.Format(CultureInfo.InvariantCulture, FieldNotLowercase, nameof(model.PageLocation)), vr.First(f => f.MemberNames.Any(a => a == nameof(model.PageLocation))).ErrorMessage);
+        }
+
+        [Theory]
+        [InlineData("abcdefghijklmnopqrstuvwxyz")]
+        [InlineData("0123456789")]
+        [InlineData("abc")]
+        [InlineData("xyz123")]
+        [InlineData("abc_def")]
+        [InlineData("abc-def")]
+        public void CanCheckIfRedirectLocationIsValid(string redirectLocation)
+        {
+            // Arrange
+            var model = CreateModel(Guid.NewGuid(), "canonicalname1", "pagelocation", "content1", "abc-def", new List<string>() { redirectLocation });
+
+            // Act
+            var vr = Validate(model);
+
+            // Assert
+            Assert.True(vr.Count == 0);
+        }
+
+        [Theory]
+        [InlineData("ABCDEF")]
+        public void CanCheckIfRedirectLocationIsInvalid(string redirectLocation)
+        {
+            // Arrange
+            var model = CreateModel(Guid.NewGuid(), "canonicalname1", "pagelocation", "content1", "abc-def", new List<string>() { redirectLocation });
+
+            // Act
+            var vr = Validate(model);
+
+            // Assert
+            Assert.True(vr.Count > 0);
+            Assert.NotNull(vr.First(f => f.MemberNames.Any(a => a == nameof(model.RedirectLocations))));
+            Assert.Equal(string.Format(CultureInfo.InvariantCulture, FieldNotLowercase, nameof(model.RedirectLocations)), vr.First(f => f.MemberNames.Any(a => a == nameof(model.RedirectLocations))).ErrorMessage);
         }
 
         [Theory]
@@ -136,7 +171,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
         public void CanCheckIfUrlIsValid(string url)
         {
             // Arrange
-            var model = CreateModel(Guid.NewGuid(), "canonicalname1", "content1", url, new List<string>());
+            var model = CreateModel(Guid.NewGuid(), "canonicalname1", "pagelocation", "content1", url, new List<string>());
 
             // Act
             var vr = Validate(model);
@@ -145,24 +180,25 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
             Assert.True(vr.Count == 0);
         }
 
-        private ContentPageModel CreateModel(Guid id, string canonicalName, string content, string url, List<string> alternativeNames)
+        private TestContentPageModel CreateModel(Guid id, string canonicalName, string pageLocation, string content, string url, List<string> redirectLocations)
         {
-            var model = new ContentPageModel
+            var model = new TestContentPageModel
             {
                 Id = id,
                 CanonicalName = canonicalName,
+                PageLocation = pageLocation,
                 BreadcrumbTitle = canonicalName,
                 Version = Guid.NewGuid(),
                 Url = new Uri(url, UriKind.RelativeOrAbsolute),
                 Content = content,
-                AlternativeNames = alternativeNames.ToArray(),
+                RedirectLocations = redirectLocations.ToArray(),
                 LastReviewed = DateTime.UtcNow,
             };
 
             return model;
         }
 
-        private List<ValidationResult> Validate(ContentPageModel model)
+        private List<ValidationResult> Validate(TestContentPageModel model)
         {
             var vr = new List<ValidationResult>();
             var vc = new ValidationContext(model);
