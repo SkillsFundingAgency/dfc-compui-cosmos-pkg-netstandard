@@ -14,7 +14,7 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
         public void DocumentGetReturnsSuccess()
         {
             // arrange
-            const string contantValue = "some content";
+            const string contentValue = "some content";
             var repository = A.Fake<ICosmosRepository<TestDocumentModel>>();
             var expectedResult = A.Fake<TestDocumentModel>();
 
@@ -23,7 +23,7 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
             var documentService = new DocumentService<TestDocumentModel>(repository);
 
             // act
-            var result = documentService.GetAsync(d => d.Content == contantValue).Result;
+            var result = documentService.GetAsync(d => d.Content == contentValue).Result;
 
             // assert
             A.CallTo(() => repository.GetAsync(A<Expression<Func<TestDocumentModel, bool>>>.Ignored)).MustHaveHappenedOnceExactly();
@@ -34,7 +34,7 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
         public void DocumentGetReturnsNullWhenMissingRepository()
         {
             // arrange
-            const string contantValue = "some content";
+            const string contentValue = "some content";
             var repository = A.Fake<ICosmosRepository<TestDocumentModel>>();
             TestDocumentModel? expectedResult = null;
 
@@ -43,7 +43,7 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
             var documentService = new DocumentService<TestDocumentModel>(repository);
 
             // act
-            var result = documentService.GetAsync(d => d.Content == contantValue).Result;
+            var result = documentService.GetAsync(d => d.Content == contentValue).Result;
 
             // assert
             A.CallTo(() => repository.GetAsync(A<Expression<Func<TestDocumentModel, bool>>>.Ignored)).MustHaveHappenedOnceExactly();
