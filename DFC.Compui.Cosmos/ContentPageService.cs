@@ -1,5 +1,6 @@
 ﻿using DFC.Compui.Cosmos.Contracts;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DFC.Compui.Cosmos
@@ -23,7 +24,14 @@ namespace DFC.Compui.Cosmos
                 throw new ArgumentNullException(nameof(canonicalName));
             }
 
-            return await Repository.GetAsync(d => d.PageLocation == pageLocation.ToLowerInvariant() && d.CanonicalName == canonicalName.ToLowerInvariant()).ConfigureAwait(false);
+            var models = await Repository.GetAsync(d => d.PageLocation == pageLocation.ToLowerInvariant() && d.CanonicalName == canonicalName.ToLowerInvariant()).ConfigureAwait(false);
+
+            if (models != null && models.Any())
+            {
+                return models.FirstOrDefault();
+            }
+
+            return default;
         }
 
         public async Task<TModel?> GetByRedirectLocationAsync(string? redirectLocation)
@@ -33,7 +41,14 @@ namespace DFC.Compui.Cosmos
                 throw new ArgumentNullException(nameof(redirectLocation));
             }
 
-            return await Repository.GetAsync(d => d.RedirectLocations!.Contains(redirectLocation.ToLowerInvariant())).ConfigureAwait(false);
+            var models = await Repository.GetAsync(d => d.RedirectLocations!.Contains(redirectLocation.ToLowerInvariant())).ConfigureAwait(false);
+
+            if (models != null && models.Any())
+            {
+                return models.FirstOrDefault();
+            }
+
+            return default;
         }
     }
 }
