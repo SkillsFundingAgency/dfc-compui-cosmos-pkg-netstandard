@@ -16,11 +16,11 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
         public void DocumentUpdateReturnsSuccessWWhenDocumentReplaced()
         {
             // arrange
+            const HttpStatusCode expectedResult = HttpStatusCode.OK;
             var repository = A.Fake<ICosmosRepository<TestDocumentModel>>();
             var testDocumentModel = A.Fake<TestDocumentModel>();
-            var expectedResult = A.Fake<TestDocumentModel>();
 
-            A.CallTo(() => repository.GetAsync(A<Expression<Func<TestDocumentModel, bool>>>.Ignored)).Returns(expectedResult);
+            A.CallTo(() => repository.UpsertAsync(testDocumentModel)).Returns(expectedResult);
 
             var documentService = new DocumentService<TestDocumentModel>(repository);
 
@@ -29,7 +29,7 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
 
             // assert
             A.CallTo(() => repository.UpsertAsync(testDocumentModel)).MustHaveHappenedOnceExactly();
-            A.Equals(result, expectedResult);
+            A.Equals(expectedResult, result);
         }
 
         [Fact]
@@ -51,11 +51,11 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
         public void DocumentUpdateReturnsNullWWhenDocumentNotReplaced()
         {
             // arrange
+            const HttpStatusCode expectedResult = HttpStatusCode.BadRequest;
             var repository = A.Fake<ICosmosRepository<TestDocumentModel>>();
             var testDocumentModel = A.Fake<TestDocumentModel>();
-            var expectedResult = A.Dummy<TestDocumentModel>();
 
-            A.CallTo(() => repository.UpsertAsync(testDocumentModel)).Returns(HttpStatusCode.BadRequest);
+            A.CallTo(() => repository.UpsertAsync(testDocumentModel)).Returns(expectedResult);
 
             var documentService = new DocumentService<TestDocumentModel>(repository);
 
@@ -65,18 +65,18 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
             // assert
             A.CallTo(() => repository.UpsertAsync(testDocumentModel)).MustHaveHappenedOnceExactly();
             A.CallTo(() => repository.GetAsync(A<Expression<Func<TestDocumentModel, bool>>>.Ignored)).MustNotHaveHappened();
-            A.Equals(result, expectedResult);
+            A.Equals(expectedResult, result);
         }
 
         [Fact]
         public void DocumentUpdateReturnsNullWhenMissingRepository()
         {
             // arrange
+            const HttpStatusCode expectedResult = HttpStatusCode.FailedDependency;
             var repository = A.Dummy<ICosmosRepository<TestDocumentModel>>();
             var testDocumentModel = A.Fake<TestDocumentModel>();
-            TestDocumentModel? expectedResult = null;
 
-            A.CallTo(() => repository.UpsertAsync(testDocumentModel)).Returns(HttpStatusCode.FailedDependency);
+            A.CallTo(() => repository.UpsertAsync(testDocumentModel)).Returns(expectedResult);
 
             var documentService = new DocumentService<TestDocumentModel>(repository);
 
@@ -86,7 +86,7 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
             // assert
             A.CallTo(() => repository.UpsertAsync(testDocumentModel)).MustHaveHappenedOnceExactly();
             A.CallTo(() => repository.GetAsync(A<Expression<Func<TestDocumentModel, bool>>>.Ignored)).MustNotHaveHappened();
-            A.Equals(result, expectedResult);
+            A.Equals(expectedResult, result);
         }
     }
 }

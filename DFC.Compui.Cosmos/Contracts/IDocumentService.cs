@@ -15,7 +15,7 @@ namespace DFC.Compui.Cosmos.Contracts
 
         Task<TModel?> GetByIdAsync(Guid id);
 
-        Task<TModel?> GetAsync(Expression<Func<TModel, bool>> where);
+        Task<IEnumerable<TModel>?> GetAsync(Expression<Func<TModel, bool>> where);
 
         Task<HttpStatusCode> UpsertAsync(TModel model);
 

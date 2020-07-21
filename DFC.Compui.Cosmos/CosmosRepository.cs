@@ -85,25 +85,22 @@ namespace DFC.Compui.Cosmos.Contracts
             return default;
         }
 
-        public async Task<TModel?> GetAsync(Expression<Func<TModel, bool>> where)
+        public async Task<IEnumerable<TModel>?> GetAsync(Expression<Func<TModel, bool>> where)
         {
-            var query = documentClient.CreateDocumentQuery<TModel>(DocumentCollectionUri, new FeedOptions { MaxItemCount = 1, EnableCrossPartitionQuery = true })
+            var query = documentClient.CreateDocumentQuery<TModel>(DocumentCollectionUri, new FeedOptions { EnableCrossPartitionQuery = true })
                                       .Where(where)
                                       .AsDocumentQuery();
 
-            if (query == null)
+            var models = new List<TModel>();
+
+            while (query.HasMoreResults)
             {
-                return default;
+                var result = await query.ExecuteNextAsync<TModel>().ConfigureAwait(false);
+
+                models.AddRange(result);
             }
 
-            var models = await query.ExecuteNextAsync<TModel>().ConfigureAwait(false);
-
-            if (models != null && models.Count > 0)
-            {
-                return models.FirstOrDefault();
-            }
-
-            return default;
+            return models.Any() ? models : default;
         }
 
         public async Task<TModel?> GetAsync(string? partitionKeyValue, Expression<Func<TModel, bool>> where)

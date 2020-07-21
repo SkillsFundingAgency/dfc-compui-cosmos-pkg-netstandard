@@ -32,7 +32,7 @@ namespace DFC.Compui.Cosmos
             return await Repository.GetByIdAsync(id).ConfigureAwait(false);
         }
 
-        public async Task<TModel?> GetAsync(Expression<Func<TModel, bool>> where)
+        public async Task<IEnumerable<TModel>?> GetAsync(Expression<Func<TModel, bool>> where)
         {
             return await Repository.GetAsync(where).ConfigureAwait(false);
         }
