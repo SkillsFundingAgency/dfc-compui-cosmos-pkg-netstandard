@@ -16,11 +16,11 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
         public void DocumentCreateReturnsSuccessWWhenDocumentCreated()
         {
             // arrange
+            const HttpStatusCode expectedResult = HttpStatusCode.Created;
             var repository = A.Fake<ICosmosRepository<TestDocumentModel>>();
             var testDocumentModel = A.Fake<TestDocumentModel>();
-            var expectedResult = A.Fake<TestDocumentModel>();
 
-            A.CallTo(() => repository.UpsertAsync(testDocumentModel)).Returns(HttpStatusCode.Created);
+            A.CallTo(() => repository.UpsertAsync(testDocumentModel)).Returns(expectedResult);
 
             var documentService = new DocumentService<TestDocumentModel>(repository);
 
@@ -51,11 +51,11 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
         public void DocumentCreateReturnsNullWWhenDocumentNotCreated()
         {
             // arrange
+            const HttpStatusCode expectedResult = HttpStatusCode.BadRequest;
             var repository = A.Fake<ICosmosRepository<TestDocumentModel>>();
             var testDocumentModel = A.Fake<TestDocumentModel>();
-            var expectedResult = A.Dummy<TestDocumentModel>();
 
-            A.CallTo(() => repository.UpsertAsync(testDocumentModel)).Returns(HttpStatusCode.BadRequest);
+            A.CallTo(() => repository.UpsertAsync(testDocumentModel)).Returns(expectedResult);
 
             var documentService = new DocumentService<TestDocumentModel>(repository);
 
@@ -72,11 +72,11 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
         public void DocumentCreateReturnsNullWhenMissingRepository()
         {
             // arrange
+            const HttpStatusCode expectedResult = HttpStatusCode.FailedDependency;
             var repository = A.Dummy<ICosmosRepository<TestDocumentModel>>();
             var testDocumentModel = A.Fake<TestDocumentModel>();
-            TestDocumentModel? expectedResult = null;
 
-            A.CallTo(() => repository.UpsertAsync(testDocumentModel)).Returns(HttpStatusCode.FailedDependency);
+            A.CallTo(() => repository.UpsertAsync(testDocumentModel)).Returns(expectedResult);
 
             var documentService = new DocumentService<TestDocumentModel>(repository);
 
