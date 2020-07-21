@@ -2,6 +2,8 @@ using DFC.Compui.Cosmos.Contracts;
 using DFC.Compui.Cosmos.UnitTests.Models;
 using FakeItEasy;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Xunit;
@@ -26,7 +28,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
         public async Task ContentPageGetByNameReturnsSuccess()
         {
             // arrange
-            var expectedResult = A.Fake<TestContentPageModel>();
+            var expectedResult = A.CollectionOfFake<TestContentPageModel>(2);
             A.CallTo(() => repository.GetAsync(A<Expression<Func<TestContentPageModel, bool>>>.Ignored)).Returns(expectedResult);
 
             // act
@@ -34,7 +36,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
 
             // assert
             A.CallTo(() => repository.GetAsync(A<Expression<Func<TestContentPageModel, bool>>>.Ignored)).MustHaveHappenedOnceExactly();
-            Assert.Equal(result, expectedResult);
+            Assert.Equal(result, expectedResult.First());
         }
 
         [Fact]
@@ -67,7 +69,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
         public async Task ContentPageGetByNameReturnsNullWhenMissingRepository()
         {
             // arrange
-            TestContentPageModel? expectedResult = null;
+            IEnumerable<TestContentPageModel>? expectedResult = null;
 
             A.CallTo(() => repository.GetAsync(A<Expression<Func<TestContentPageModel, bool>>>.Ignored)).Returns(expectedResult);
 

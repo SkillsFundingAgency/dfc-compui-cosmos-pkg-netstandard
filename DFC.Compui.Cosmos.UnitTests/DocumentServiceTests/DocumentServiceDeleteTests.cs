@@ -14,9 +14,9 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
         public void DocumentDeleteReturnsSuccessWWhenDocumentDeleted()
         {
             // arrange
+            const bool expectedResult = true;
             Guid documentId = Guid.NewGuid();
             var repository = A.Fake<ICosmosRepository<TestDocumentModel>>();
-            var expectedResult = true;
 
             A.CallTo(() => repository.DeleteAsync(documentId)).Returns(HttpStatusCode.NoContent);
 
@@ -34,9 +34,9 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
         public void DocumentDeleteReturnsNullWWhenDocumentNotDeleted()
         {
             // arrange
+            const bool expectedResult = false;
             Guid documentId = Guid.NewGuid();
             var repository = A.Fake<ICosmosRepository<TestDocumentModel>>();
-            var expectedResult = false;
 
             A.CallTo(() => repository.DeleteAsync(documentId)).Returns(HttpStatusCode.BadRequest);
 
@@ -54,9 +54,9 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
         public void DocumentDeleteReturnsFalseWhenMissingRepository()
         {
             // arrange
+            const bool expectedResult = false;
             Guid documentId = Guid.NewGuid();
             var repository = A.Dummy<ICosmosRepository<TestDocumentModel>>();
-            var expectedResult = false;
 
             A.CallTo(() => repository.DeleteAsync(documentId)).Returns(HttpStatusCode.FailedDependency);
 
