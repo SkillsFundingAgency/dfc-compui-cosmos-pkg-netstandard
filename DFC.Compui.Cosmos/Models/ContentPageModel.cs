@@ -11,53 +11,63 @@ namespace DFC.Compui.Cosmos.Models
     public abstract class ContentPageModel : DocumentModel, IContentPageModel
     {
         [Required]
-        [JsonProperty(Order = -10)]
+        [JsonProperty(Order = -20)]
         public override string? PartitionKey { get; set; } = "unknown-value";
 
         [Required]
         [LowerCase]
         [UrlPath]
-        [JsonProperty(Order = -10)]
+        [JsonProperty(Order = -20)]
         public string? CanonicalName { get; set; }
+
+        [JsonProperty(Order = -20)]
+        public bool IsDefaultForPageLocation { get; set; }
 
         [Required]
         [LowerCase]
         [UrlPath]
-        [JsonProperty(Order = -10)]
+        [JsonProperty(Order = -20)]
         public abstract string? PageLocation { get; set; }
 
         [UrlPath]
         [LowerCase]
-        [JsonProperty(Order = -10)]
+        [JsonProperty(Order = -20)]
         public IList<string>? RedirectLocations { get; set; }
 
-        [Required]
-        [JsonProperty(Order = -10)]
-        public Guid? Version { get; set; }
-
-        [Required]
+        [JsonProperty(Order = -20)]
         [Display(Name = "Breadcrumb Title")]
         public string? BreadcrumbTitle { get; set; }
 
+        [JsonProperty(Order = -20)]
         [Display(Name = "Include In SiteMap")]
         public bool IncludeInSitemap { get; set; }
 
+        [JsonProperty(Order = -20)]
         [Display(Name = "SiteMap Priority")]
         public double SiteMapPriority { get; set; }
 
+        [JsonProperty(Order = -20)]
         [Display(Name = "SiteMap Change Frequency")]
         public SiteMapChangeFrequency SiteMapChangeFrequency { get; set; }
 
         [Required]
+        [JsonProperty(Order = -20)]
         public Uri? Url { get; set; }
 
+        [Required]
+        [JsonProperty(Order = -20)]
+        public Guid? Version { get; set; }
+
+        [Required]
+        [JsonProperty(Order = -20)]
+        [Display(Name = "Last Reviewed")]
+        public DateTime LastReviewed { get; set; }
+
+        [JsonProperty(Order = -20)]
         public MetaTagsModel MetaTags { get; set; } = new MetaTagsModel();
 
         [Required]
+        [JsonProperty(Order = -20)]
         public string? Content { get; set; }
-
-        [Required]
-        [Display(Name = "Last Reviewed")]
-        public DateTime LastReviewed { get; set; }
     }
 }

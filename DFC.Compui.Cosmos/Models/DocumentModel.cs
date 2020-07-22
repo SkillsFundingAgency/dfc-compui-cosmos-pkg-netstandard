@@ -13,7 +13,7 @@ namespace DFC.Compui.Cosmos.Contracts
         public Guid Id { get; set; }
 
         [Required]
-        [JsonProperty(Order = -20)]
+        [JsonProperty(Order = -30)]
         public abstract string? PartitionKey { get; set; }
 
         [JsonProperty(PropertyName = "_etag", Order = 0)]
