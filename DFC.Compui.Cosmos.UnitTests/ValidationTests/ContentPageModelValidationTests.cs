@@ -1,5 +1,4 @@
-﻿using DFC.Compui.Cosmos.Models;
-using DFC.Compui.Cosmos.UnitTests.Models;
+﻿using DFC.Compui.Cosmos.UnitTests.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -27,11 +26,10 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
             var vr = Validate(model);
 
             // Assert
-            Assert.True(vr.Count == 6);
+            Assert.Equal(5, vr.Count);
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.Id)));
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.CanonicalName)));
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.Version)));
-            Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.BreadcrumbTitle)));
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.Url)));
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.Content)));
         }
