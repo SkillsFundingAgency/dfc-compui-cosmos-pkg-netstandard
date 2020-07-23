@@ -40,6 +40,21 @@ namespace DFC.Compui.Cosmos.UnitTests.ContentPageTests
         }
 
         [Fact]
+        public async Task ContentPageGetByNameCanonicalReturnsSuccess()
+        {
+            // arrange
+            var expectedResult = A.CollectionOfFake<TestContentPageModel>(2);
+            A.CallTo(() => repository.GetAsync(A<Expression<Func<TestContentPageModel, bool>>>.Ignored)).Returns(expectedResult);
+
+            // act
+            var result = await contentPageService.GetByNameAsync(CanonicalName).ConfigureAwait(false);
+
+            // assert
+            A.CallTo(() => repository.GetAsync(A<Expression<Func<TestContentPageModel, bool>>>.Ignored)).MustHaveHappenedOnceExactly();
+            Assert.Equal(result, expectedResult.First());
+        }
+
+        [Fact]
         public async Task ContentPageGetByNameReturnsArgumentNullExceptionWhenNullCanonicalNameIsUsed()
         {
             // arrange

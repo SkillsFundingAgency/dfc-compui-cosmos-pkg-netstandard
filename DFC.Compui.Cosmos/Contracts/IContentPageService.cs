@@ -7,6 +7,8 @@ namespace DFC.Compui.Cosmos.Contracts
     {
         Task<TModel?> GetByNameAsync(string? pageLocation, string? canonicalName);
 
+        Task<TModel?> GetByNameAsync(string? canonicalName);
+
         Task<TModel?> GetByRedirectLocationAsync(string? redirectLocation);
     }
 }
