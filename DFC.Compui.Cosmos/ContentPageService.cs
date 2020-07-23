@@ -34,6 +34,23 @@ namespace DFC.Compui.Cosmos
             return default;
         }
 
+        public async Task<TModel?> GetByNameAsync(string? canonicalName)
+        {
+            if (string.IsNullOrWhiteSpace(canonicalName))
+            {
+                throw new ArgumentNullException(nameof(canonicalName));
+            }
+
+            var models = await Repository.GetAsync(d => d.CanonicalName == canonicalName.ToLowerInvariant()).ConfigureAwait(false);
+
+            if (models != null && models.Any())
+            {
+                return models.FirstOrDefault();
+            }
+
+            return default;
+        }
+
         public async Task<TModel?> GetByRedirectLocationAsync(string? redirectLocation)
         {
             if (string.IsNullOrWhiteSpace(redirectLocation))
