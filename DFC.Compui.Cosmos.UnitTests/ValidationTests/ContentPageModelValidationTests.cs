@@ -185,7 +185,6 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
                 Id = id,
                 CanonicalName = canonicalName,
                 PageLocation = pageLocation,
-                BreadcrumbTitle = canonicalName,
                 Version = Guid.NewGuid(),
                 Url = new Uri(url, UriKind.RelativeOrAbsolute),
                 Content = content,
