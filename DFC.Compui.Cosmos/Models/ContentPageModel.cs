@@ -35,10 +35,6 @@ namespace DFC.Compui.Cosmos.Models
         public IList<string>? RedirectLocations { get; set; }
 
         [JsonProperty(Order = -20)]
-        [Display(Name = "Breadcrumb Title")]
-        public string? BreadcrumbTitle { get; set; }
-
-        [JsonProperty(Order = -20)]
         [Display(Name = "Include In SiteMap")]
         public bool IncludeInSitemap { get; set; }
 
