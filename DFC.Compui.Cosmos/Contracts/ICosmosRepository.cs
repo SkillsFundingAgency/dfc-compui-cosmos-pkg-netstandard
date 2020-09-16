@@ -11,15 +11,13 @@ namespace DFC.Compui.Cosmos.Contracts
     {
         Task<bool> PingAsync();
 
-        Task<TModel?> GetByIdAsync(Guid id);
+        Task<TModel?> GetByIdAsync(Guid id, string? partitionKeyValue = null);
 
         Task<IEnumerable<TModel>?> GetAsync(Expression<Func<TModel, bool>> where);
 
-        Task<TModel?> GetAsync(string? partitionKeyValue, Expression<Func<TModel, bool>> where);
+        Task<TModel?> GetAsync(Expression<Func<TModel, bool>> where, string partitionKeyValue);
 
-        Task<IEnumerable<TModel>?> GetAllAsync();
-
-        Task<IEnumerable<TModel>?> GetAllAsync(string? partitionKeyValue);
+        Task<IEnumerable<TModel>?> GetAllAsync(string? partitionKeyValue = null);
 
         Task<HttpStatusCode> UpsertAsync(TModel model);
 

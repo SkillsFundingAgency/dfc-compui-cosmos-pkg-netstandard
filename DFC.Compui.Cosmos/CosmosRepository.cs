@@ -56,8 +56,16 @@ namespace DFC.Compui.Cosmos.Contracts
             return firstModel != null;
         }
 
-        public async Task<TModel?> GetByIdAsync(Guid id)
+        public async Task<TModel?> GetByIdAsync(Guid id, string? partitionKeyValue = null)
         {
+            var feedOptions = new FeedOptions { MaxItemCount = 1, EnableCrossPartitionQuery = true };
+
+            if (!string.IsNullOrEmpty(partitionKeyValue))
+            {
+                feedOptions.EnableCrossPartitionQuery = false;
+                feedOptions.PartitionKey = new PartitionKey(partitionKeyValue.ToLowerInvariant());
+            }
+
             var query = documentClient.CreateDocumentQuery<TModel>(
                 DocumentCollectionUri,
                 new SqlQuerySpec($"SELECT * FROM c WHERE c.id = @id")
@@ -67,7 +75,7 @@ namespace DFC.Compui.Cosmos.Contracts
                         new SqlParameter("@id", id),
                     }),
                 },
-                new FeedOptions { MaxItemCount = 1, EnableCrossPartitionQuery = true })
+                feedOptions)
                 .AsDocumentQuery();
 
             if (query == null)
@@ -103,16 +111,20 @@ namespace DFC.Compui.Cosmos.Contracts
             return models.Any() ? models : default;
         }
 
-        public async Task<TModel?> GetAsync(string? partitionKeyValue, Expression<Func<TModel, bool>> where)
+        public async Task<TModel?> GetAsync(Expression<Func<TModel, bool>> where, string partitionKeyValue)
         {
             if (string.IsNullOrWhiteSpace(partitionKeyValue))
             {
                 throw new ArgumentNullException(nameof(partitionKeyValue));
             }
 
-            var partitionKey = new PartitionKey(partitionKeyValue.ToLowerInvariant());
-
-            var query = documentClient.CreateDocumentQuery<TModel>(DocumentCollectionUri, new FeedOptions { MaxItemCount = 1, PartitionKey = partitionKey })
+            var feedOptions = new FeedOptions
+            {
+                MaxItemCount = 1,
+                EnableCrossPartitionQuery = false,
+                PartitionKey = new PartitionKey(partitionKeyValue.ToLowerInvariant()),
+            };
+            var query = documentClient.CreateDocumentQuery<TModel>(DocumentCollectionUri, feedOptions)
                                       .Where(where)
                                       .AsDocumentQuery();
 
@@ -131,33 +143,17 @@ namespace DFC.Compui.Cosmos.Contracts
             return default;
         }
 
-        public async Task<IEnumerable<TModel>?> GetAllAsync()
+        public async Task<IEnumerable<TModel>?> GetAllAsync(string? partitionKeyValue = null)
         {
-            var query = documentClient.CreateDocumentQuery<TModel>(DocumentCollectionUri, new FeedOptions { EnableCrossPartitionQuery = true })
-                                      .AsDocumentQuery();
+            var feedOptions = new FeedOptions { EnableCrossPartitionQuery = true };
 
-            var models = new List<TModel>();
-
-            while (query.HasMoreResults)
+            if (!string.IsNullOrEmpty(partitionKeyValue))
             {
-                var result = await query.ExecuteNextAsync<TModel>().ConfigureAwait(false);
-
-                models.AddRange(result);
+                feedOptions.EnableCrossPartitionQuery = false;
+                feedOptions.PartitionKey = new PartitionKey(partitionKeyValue.ToLowerInvariant());
             }
 
-            return models.Any() ? models : default;
-        }
-
-        public async Task<IEnumerable<TModel>?> GetAllAsync(string? partitionKeyValue)
-        {
-            if (string.IsNullOrWhiteSpace(partitionKeyValue))
-            {
-                throw new ArgumentNullException(nameof(partitionKeyValue));
-            }
-
-            var partitionKey = new PartitionKey(partitionKeyValue.ToLowerInvariant());
-
-            var query = documentClient.CreateDocumentQuery<TModel>(DocumentCollectionUri, new FeedOptions { PartitionKey = partitionKey })
+            var query = documentClient.CreateDocumentQuery<TModel>(DocumentCollectionUri, feedOptions)
                                       .AsDocumentQuery();
 
             var models = new List<TModel>();

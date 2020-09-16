@@ -13,6 +13,27 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
     public class DocumentServiceGetTests
     {
         [Fact]
+        public void DocumentGetByPartitionKeyReturnsSuccess()
+        {
+            // arrange
+            const string contentValue = "some content";
+            const string partitionKeyValue = "a partition key";
+            var repository = A.Fake<ICosmosRepository<TestDocumentModel>>();
+            var expectedResult = A.Fake<TestDocumentModel>();
+
+            A.CallTo(() => repository.GetAsync(A<Expression<Func<TestDocumentModel, bool>>>.Ignored, A<string>.Ignored)).Returns(expectedResult);
+
+            var documentService = new DocumentService<TestDocumentModel>(repository);
+
+            // act
+            var result = documentService.GetAsync(d => d.Content == contentValue, partitionKeyValue).Result;
+
+            // assert
+            A.CallTo(() => repository.GetAsync(A<Expression<Func<TestDocumentModel, bool>>>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();
+            A.Equals(result, expectedResult);
+        }
+
+        [Fact]
         public void DocumentGetReturnsSuccess()
         {
             // arrange

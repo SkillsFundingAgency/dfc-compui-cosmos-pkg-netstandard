@@ -24,14 +24,9 @@ namespace DFC.Compui.Cosmos
                 throw new ArgumentNullException(nameof(canonicalName));
             }
 
-            var models = await Repository.GetAsync(d => d.PageLocation == pageLocation.ToLowerInvariant() && d.CanonicalName == canonicalName.ToLowerInvariant()).ConfigureAwait(false);
+            var model = await Repository.GetAsync(d => d.CanonicalName == canonicalName.ToLowerInvariant(), pageLocation.ToLowerInvariant()).ConfigureAwait(false);
 
-            if (models != null && models.Any())
-            {
-                return models.FirstOrDefault();
-            }
-
-            return default;
+            return model;
         }
 
         public async Task<TModel?> GetByNameAsync(string? canonicalName)

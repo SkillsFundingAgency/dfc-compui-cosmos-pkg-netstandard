@@ -17,7 +17,7 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
             var repository = A.Fake<ICosmosRepository<TestDocumentModel>>();
             var expectedResult = A.Fake<TestDocumentModel>();
 
-            A.CallTo(() => repository.GetByIdAsync(A<Guid>.Ignored)).Returns(expectedResult);
+            A.CallTo(() => repository.GetByIdAsync(A<Guid>.Ignored, A<string>.Ignored)).Returns(expectedResult);
 
             var documentService = new DocumentService<TestDocumentModel>(repository);
 
@@ -25,7 +25,7 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
             var result = documentService.GetByIdAsync(documentId).Result;
 
             // assert
-            A.CallTo(() => repository.GetByIdAsync(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => repository.GetByIdAsync(A<Guid>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();
             A.Equals(result, expectedResult);
         }
 
@@ -37,7 +37,7 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
             var repository = A.Fake<ICosmosRepository<TestDocumentModel>>();
             TestDocumentModel? expectedResult = null;
 
-            A.CallTo(() => repository.GetByIdAsync(A<Guid>.Ignored)).Returns(expectedResult);
+            A.CallTo(() => repository.GetByIdAsync(A<Guid>.Ignored, A<string>.Ignored)).Returns(expectedResult);
 
             var documentService = new DocumentService<TestDocumentModel>(repository);
 
@@ -45,7 +45,7 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
             var result = documentService.GetByIdAsync(documentId).Result;
 
             // assert
-            A.CallTo(() => repository.GetByIdAsync(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => repository.GetByIdAsync(A<Guid>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();
             A.Equals(result, expectedResult);
         }
     }

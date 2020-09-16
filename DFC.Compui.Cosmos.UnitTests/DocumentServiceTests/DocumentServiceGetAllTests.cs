@@ -17,7 +17,7 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
             var repository = A.Fake<ICosmosRepository<TestDocumentModel>>();
             var expectedResults = A.CollectionOfFake<TestDocumentModel>(2);
 
-            A.CallTo(() => repository.GetAllAsync()).Returns(expectedResults);
+            A.CallTo(() => repository.GetAllAsync(A<string>.Ignored)).Returns(expectedResults);
 
             var documentService = new DocumentService<TestDocumentModel>(repository);
 
@@ -25,7 +25,7 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
             var results = await documentService.GetAllAsync().ConfigureAwait(false);
 
             // assert
-            A.CallTo(() => repository.GetAllAsync()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => repository.GetAllAsync(A<string>.Ignored)).MustHaveHappenedOnceExactly();
             A.Equals(results, expectedResults);
         }
 
@@ -36,7 +36,7 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
             var repository = A.Dummy<ICosmosRepository<TestDocumentModel>>();
             IEnumerable<TestDocumentModel>? expectedResults = null;
 
-            A.CallTo(() => repository.GetAllAsync()).Returns(expectedResults);
+            A.CallTo(() => repository.GetAllAsync(A<string>.Ignored)).Returns(expectedResults);
 
             var documentService = new DocumentService<TestDocumentModel>(repository);
 
@@ -44,7 +44,7 @@ namespace DFC.Compui.Cosmos.UnitTests.DocumentTests
             var results = await documentService.GetAllAsync().ConfigureAwait(false);
 
             // assert
-            A.CallTo(() => repository.GetAllAsync()).MustHaveHappenedOnceExactly();
+            A.CallTo(() => repository.GetAllAsync(A<string>.Ignored)).MustHaveHappenedOnceExactly();
             A.Equals(results, expectedResults);
         }
     }

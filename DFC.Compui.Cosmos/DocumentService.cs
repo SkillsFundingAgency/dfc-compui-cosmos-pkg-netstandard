@@ -22,19 +22,24 @@ namespace DFC.Compui.Cosmos
             return await Repository.PingAsync().ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<TModel>?> GetAllAsync()
+        public async Task<IEnumerable<TModel>?> GetAllAsync(string? partitionKeyValue = null)
         {
-            return await Repository.GetAllAsync().ConfigureAwait(false);
+            return await Repository.GetAllAsync(partitionKeyValue).ConfigureAwait(false);
         }
 
-        public async Task<TModel?> GetByIdAsync(Guid id)
+        public async Task<TModel?> GetByIdAsync(Guid id, string? partitionKey = null)
         {
-            return await Repository.GetByIdAsync(id).ConfigureAwait(false);
+            return await Repository.GetByIdAsync(id, partitionKey).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<TModel>?> GetAsync(Expression<Func<TModel, bool>> where)
         {
             return await Repository.GetAsync(where).ConfigureAwait(false);
+        }
+
+        public async Task<TModel?> GetAsync(Expression<Func<TModel, bool>> where, string partitionKeyValue)
+        {
+            return await Repository.GetAsync(where, partitionKeyValue).ConfigureAwait(false);
         }
 
         public async Task<HttpStatusCode> UpsertAsync(TModel? model)
