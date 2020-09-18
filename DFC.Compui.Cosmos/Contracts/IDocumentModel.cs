@@ -1,8 +1,9 @@
-﻿using System;
+﻿using DFC.Compui.Telemetry.Interface;
+using System;
 
 namespace DFC.Compui.Cosmos.Contracts
 {
-    public interface IDocumentModel
+    public interface IDocumentModel : IRequestTrace
     {
         Guid Id { get; set; }
 

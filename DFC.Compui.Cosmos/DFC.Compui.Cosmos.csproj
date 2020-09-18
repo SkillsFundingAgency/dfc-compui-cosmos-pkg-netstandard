@@ -24,7 +24,7 @@ For details on how to use this package see the ReadMe file that is part of this 
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DFC.Compui.Telemetry" Version="1.0.10" />
+    <PackageReference Include="DFC.Compui.Telemetry" Version="1.0.31" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.11.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
