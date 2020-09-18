@@ -12,7 +12,7 @@ namespace DFC.Compui.Cosmos
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddDocumentServices<TModel>(this IServiceCollection services, CosmosDbConnection cosmosDbConnection, bool isDevelopment)
-         where TModel : RequestTrace, IDocumentModel
+         where TModel : class, IDocumentModel
         {
             _ = cosmosDbConnection ?? throw new ArgumentNullException(nameof(cosmosDbConnection));
 

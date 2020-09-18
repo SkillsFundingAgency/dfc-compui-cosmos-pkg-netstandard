@@ -16,7 +16,7 @@ namespace DFC.Compui.Cosmos.Contracts
 {
     [ExcludeFromCodeCoverage]
     public class CosmosRepository<TModel> : ICosmosRepository<TModel>
-        where TModel : RequestTrace, IDocumentModel
+        where TModel : class, IDocumentModel
     {
         private readonly CosmosDbConnection cosmosDbConnection;
         private readonly IDocumentClient documentClient;
