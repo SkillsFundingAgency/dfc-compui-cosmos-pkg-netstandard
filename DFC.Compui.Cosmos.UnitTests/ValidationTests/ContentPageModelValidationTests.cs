@@ -26,12 +26,14 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
             var vr = Validate(model);
 
             // Assert
-            Assert.Equal(5, vr.Count);
+            Assert.Equal(7, vr.Count);
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.Id)));
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.CanonicalName)));
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.Version)));
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.Url)));
             Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.Content)));
+            Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.CreatedDate)));
+            Assert.Contains(vr, c => c.MemberNames.Any(a => a == nameof(model.LastReviewed)));
         }
 
         [Theory]
@@ -190,6 +192,7 @@ namespace DFC.Compui.Cosmos.UnitTests.ValidationTests
                 Content = content,
                 RedirectLocations = redirectLocations.ToArray(),
                 LastReviewed = DateTime.UtcNow,
+                CreatedDate = DateTime.UtcNow,
             };
 
             return model;

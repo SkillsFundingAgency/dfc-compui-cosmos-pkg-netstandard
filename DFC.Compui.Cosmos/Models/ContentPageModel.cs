@@ -57,7 +57,17 @@ namespace DFC.Compui.Cosmos.Models
         [Required]
         [JsonProperty(Order = -20)]
         [Display(Name = "Last Reviewed")]
-        public DateTime LastReviewed { get; set; }
+        public DateTime? LastReviewed { get; set; }
+
+        [Required]
+        [JsonProperty(Order = -20)]
+        [Display(Name = "Last Cached")]
+        public DateTime LastCached { get; set; } = DateTime.UtcNow;
+
+        [Required]
+        [JsonProperty(Order = -20)]
+        [Display(Name = "Created Date")]
+        public DateTime? CreatedDate { get; set; }
 
         [JsonProperty(Order = -20)]
         public MetaTagsModel MetaTags { get; set; } = new MetaTagsModel();
