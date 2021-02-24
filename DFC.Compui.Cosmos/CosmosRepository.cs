@@ -1,5 +1,4 @@
-﻿using DFC.Compui.Telemetry.Models;
-using DFC.Compui.Telemetry.TraceExtensions;
+﻿using DFC.Compui.Telemetry.TraceExtensions;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Azure.Documents.Linq;
@@ -196,6 +195,25 @@ namespace DFC.Compui.Cosmos.Contracts
                 var result = await documentClient.DeleteDocumentAsync(documentUri, new RequestOptions { AccessCondition = accessCondition, PartitionKey = partitionKey }).ConfigureAwait(false);
 
                 return result.StatusCode;
+            }
+
+            return HttpStatusCode.NotFound;
+        }
+
+        public async Task<HttpStatusCode> PurgeAsync()
+        {
+            var models = await GetAllAsync().ConfigureAwait(false);
+
+            if (models != null && models.Any())
+            {
+                foreach (var model in models)
+                {
+                    var documentUri = CreateDocumentUri(model.Id);
+                    var accessCondition = new AccessCondition { Condition = model.Etag, Type = AccessConditionType.IfMatch };
+                    var partitionKey = new PartitionKey(model.PartitionKey);
+
+                    _ = await documentClient.DeleteDocumentAsync(documentUri, new RequestOptions { AccessCondition = accessCondition, PartitionKey = partitionKey }).ConfigureAwait(false);
+                }
             }
 
             return HttpStatusCode.NotFound;

@@ -3,9 +3,11 @@ using DFC.Compui.Telemetry.Models;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DFC.Compui.Cosmos.Contracts
 {
+    [ExcludeFromCodeCoverage]
     public abstract class DocumentModel : RequestTrace, IRequestTrace, IDocumentModel
     {
         [Required]
