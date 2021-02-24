@@ -22,5 +22,7 @@ namespace DFC.Compui.Cosmos.Contracts
         Task<HttpStatusCode> UpsertAsync(TModel model);
 
         Task<HttpStatusCode> DeleteAsync(Guid id);
+
+        Task<HttpStatusCode> PurgeAsync();
     }
 }

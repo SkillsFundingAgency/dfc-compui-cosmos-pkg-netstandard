@@ -58,5 +58,12 @@ namespace DFC.Compui.Cosmos
 
             return result == HttpStatusCode.NoContent;
         }
+
+        public async Task<bool> PurgeAsync()
+        {
+            var result = await Repository.PurgeAsync().ConfigureAwait(false);
+
+            return result == HttpStatusCode.NoContent;
+        }
     }
 }

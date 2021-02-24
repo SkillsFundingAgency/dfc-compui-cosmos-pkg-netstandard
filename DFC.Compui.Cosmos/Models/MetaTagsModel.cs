@@ -1,5 +1,8 @@
-﻿namespace DFC.Compui.Cosmos.Models
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace DFC.Compui.Cosmos.Models
 {
+    [ExcludeFromCodeCoverage]
     public class MetaTagsModel
     {
         public string? Title { get; set; }

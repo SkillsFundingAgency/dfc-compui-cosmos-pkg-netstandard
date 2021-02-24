@@ -5,9 +5,11 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DFC.Compui.Cosmos.Models
 {
+    [ExcludeFromCodeCoverage]
     public abstract class ContentPageModel : DocumentModel, IContentPageModel
     {
         [Required]
