@@ -42,8 +42,6 @@ namespace DFC.Compui.Cosmos
         {
             _ = cosmosDbConnection ?? throw new ArgumentNullException(nameof(cosmosDbConnection));
 
-            var xxx = new ConnectionPolicy { RetryOptions = new RetryOptions { MaxRetryAttemptsOnThrottledRequests = 10, MaxRetryWaitTimeInSeconds = 99 } };
-
             DocumentClient? documentClient;
 
             if (retryOptions != null)
