@@ -16,17 +16,7 @@ namespace DFC.Compui.Cosmos
         {
             _ = cosmosDbConnection ?? throw new ArgumentNullException(nameof(cosmosDbConnection));
 
-            DocumentClient? documentClient;
-
-            if (retryOptions != null)
-            {
-                documentClient = new DocumentClient(cosmosDbConnection!.EndpointUrl, cosmosDbConnection!.AccessKey, new ConnectionPolicy { RetryOptions = retryOptions });
-            }
-            else
-            {
-                documentClient = new DocumentClient(cosmosDbConnection!.EndpointUrl, cosmosDbConnection!.AccessKey);
-            }
-
+            var documentClient = BuildDocumentClient(cosmosDbConnection, retryOptions);
             object[] serviceArguments = { cosmosDbConnection, documentClient, isDevelopment };
 
             services.AddSingleton(cosmosDbConnection);
@@ -42,17 +32,7 @@ namespace DFC.Compui.Cosmos
         {
             _ = cosmosDbConnection ?? throw new ArgumentNullException(nameof(cosmosDbConnection));
 
-            DocumentClient? documentClient;
-
-            if (retryOptions != null)
-            {
-                documentClient = new DocumentClient(cosmosDbConnection!.EndpointUrl, cosmosDbConnection!.AccessKey, new ConnectionPolicy { RetryOptions = retryOptions });
-            }
-            else
-            {
-                documentClient = new DocumentClient(cosmosDbConnection!.EndpointUrl, cosmosDbConnection!.AccessKey);
-            }
-
+            var documentClient = BuildDocumentClient(cosmosDbConnection, retryOptions);
             object[] serviceArguments = { cosmosDbConnection, documentClient, isDevelopment };
 
             services.AddSingleton(cosmosDbConnection);
@@ -61,6 +41,18 @@ namespace DFC.Compui.Cosmos
             services.AddTransient<IContentPageService<TModel>, ContentPageService<TModel>>();
 
             return services;
+        }
+
+        private static DocumentClient BuildDocumentClient(CosmosDbConnection cosmosDbConnection, RetryOptions? retryOptions)
+        {
+            if (retryOptions != null)
+            {
+                return new DocumentClient(cosmosDbConnection!.EndpointUrl, cosmosDbConnection!.AccessKey, new ConnectionPolicy { RetryOptions = retryOptions });
+            }
+            else
+            {
+                return new DocumentClient(cosmosDbConnection!.EndpointUrl, cosmosDbConnection!.AccessKey);
+            }
         }
     }
 }
