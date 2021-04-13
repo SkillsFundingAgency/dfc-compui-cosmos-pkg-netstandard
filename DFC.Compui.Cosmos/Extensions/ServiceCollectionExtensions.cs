@@ -11,12 +11,22 @@ namespace DFC.Compui.Cosmos
     [ExcludeFromCodeCoverage]
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddDocumentServices<TModel>(this IServiceCollection services, CosmosDbConnection cosmosDbConnection, bool isDevelopment)
+        public static IServiceCollection AddDocumentServices<TModel>(this IServiceCollection services, CosmosDbConnection cosmosDbConnection, bool isDevelopment, RetryOptions? retryOptions = null)
          where TModel : class, IDocumentModel
         {
             _ = cosmosDbConnection ?? throw new ArgumentNullException(nameof(cosmosDbConnection));
 
-            var documentClient = new DocumentClient(cosmosDbConnection!.EndpointUrl, cosmosDbConnection!.AccessKey);
+            DocumentClient? documentClient;
+
+            if (retryOptions != null)
+            {
+                documentClient = new DocumentClient(cosmosDbConnection!.EndpointUrl, cosmosDbConnection!.AccessKey, new ConnectionPolicy { RetryOptions = retryOptions });
+            }
+            else
+            {
+                documentClient = new DocumentClient(cosmosDbConnection!.EndpointUrl, cosmosDbConnection!.AccessKey);
+            }
+
             object[] serviceArguments = { cosmosDbConnection, documentClient, isDevelopment };
 
             services.AddSingleton(cosmosDbConnection);
@@ -27,12 +37,24 @@ namespace DFC.Compui.Cosmos
             return services;
         }
 
-        public static IServiceCollection AddContentPageServices<TModel>(this IServiceCollection services, CosmosDbConnection cosmosDbConnection, bool isDevelopment)
+        public static IServiceCollection AddContentPageServices<TModel>(this IServiceCollection services, CosmosDbConnection cosmosDbConnection, bool isDevelopment, RetryOptions? retryOptions = null)
          where TModel : RequestTrace, IContentPageModel
         {
             _ = cosmosDbConnection ?? throw new ArgumentNullException(nameof(cosmosDbConnection));
 
-            var documentClient = new DocumentClient(cosmosDbConnection!.EndpointUrl, cosmosDbConnection!.AccessKey);
+            var xxx = new ConnectionPolicy { RetryOptions = new RetryOptions { MaxRetryAttemptsOnThrottledRequests = 10, MaxRetryWaitTimeInSeconds = 99 } };
+
+            DocumentClient? documentClient;
+
+            if (retryOptions != null)
+            {
+                documentClient = new DocumentClient(cosmosDbConnection!.EndpointUrl, cosmosDbConnection!.AccessKey, new ConnectionPolicy { RetryOptions = retryOptions });
+            }
+            else
+            {
+                documentClient = new DocumentClient(cosmosDbConnection!.EndpointUrl, cosmosDbConnection!.AccessKey);
+            }
+
             object[] serviceArguments = { cosmosDbConnection, documentClient, isDevelopment };
 
             services.AddSingleton(cosmosDbConnection);
