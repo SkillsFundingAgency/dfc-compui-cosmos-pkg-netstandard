@@ -11,12 +11,12 @@ namespace DFC.Compui.Cosmos
     [ExcludeFromCodeCoverage]
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddDocumentServices<TModel>(this IServiceCollection services, CosmosDbConnection cosmosDbConnection, bool isDevelopment)
+        public static IServiceCollection AddDocumentServices<TModel>(this IServiceCollection services, CosmosDbConnection cosmosDbConnection, bool isDevelopment, RetryOptions? retryOptions = null)
          where TModel : class, IDocumentModel
         {
             _ = cosmosDbConnection ?? throw new ArgumentNullException(nameof(cosmosDbConnection));
 
-            var documentClient = new DocumentClient(cosmosDbConnection!.EndpointUrl, cosmosDbConnection!.AccessKey);
+            var documentClient = BuildDocumentClient(cosmosDbConnection, retryOptions);
             object[] serviceArguments = { cosmosDbConnection, documentClient, isDevelopment };
 
             services.AddSingleton(cosmosDbConnection);
@@ -27,12 +27,12 @@ namespace DFC.Compui.Cosmos
             return services;
         }
 
-        public static IServiceCollection AddContentPageServices<TModel>(this IServiceCollection services, CosmosDbConnection cosmosDbConnection, bool isDevelopment)
+        public static IServiceCollection AddContentPageServices<TModel>(this IServiceCollection services, CosmosDbConnection cosmosDbConnection, bool isDevelopment, RetryOptions? retryOptions = null)
          where TModel : RequestTrace, IContentPageModel
         {
             _ = cosmosDbConnection ?? throw new ArgumentNullException(nameof(cosmosDbConnection));
 
-            var documentClient = new DocumentClient(cosmosDbConnection!.EndpointUrl, cosmosDbConnection!.AccessKey);
+            var documentClient = BuildDocumentClient(cosmosDbConnection, retryOptions);
             object[] serviceArguments = { cosmosDbConnection, documentClient, isDevelopment };
 
             services.AddSingleton(cosmosDbConnection);
@@ -41,6 +41,18 @@ namespace DFC.Compui.Cosmos
             services.AddTransient<IContentPageService<TModel>, ContentPageService<TModel>>();
 
             return services;
+        }
+
+        private static DocumentClient BuildDocumentClient(CosmosDbConnection cosmosDbConnection, RetryOptions? retryOptions)
+        {
+            if (retryOptions != null)
+            {
+                return new DocumentClient(cosmosDbConnection!.EndpointUrl, cosmosDbConnection!.AccessKey, new ConnectionPolicy { RetryOptions = retryOptions });
+            }
+            else
+            {
+                return new DocumentClient(cosmosDbConnection!.EndpointUrl, cosmosDbConnection!.AccessKey);
+            }
         }
     }
 }
